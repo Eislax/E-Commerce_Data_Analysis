@@ -26,7 +26,7 @@ for col in datetime_cols:
 # Sidebar
 with st.sidebar:
     st.title("Muhammad Rafi Ilham")
-    st.image("e-commerce.jpeg")
+    st.image("dashboard/e-commerce.jpeg")
 
 # Main
 function = DataAnalyzer(all_df)
