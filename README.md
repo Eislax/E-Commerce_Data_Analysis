@@ -29,4 +29,4 @@ Proyek ini bertujuan untuk melakukan analisis data menggunakan pyton yang akan d
    Maka anda akan langsung ditampilkan alamat pada terminal anda dan anda bisa membukanya atau bisa saja anda akan langsung menuju ke halaman dashboard streamlit nya setelah menjalankan perintah diatas tadi
 
 \*\*Melalui Website
-Anda bisa saja langsung mengakses pada link berikut: (https://dicodingsubmissiondataanalysis.streamlit.app/).
+Anda bisa saja langsung mengakses pada link berikut: (https://e-commercedataanalysis-eisla-rafilham.streamlit.app/).
