@@ -16,6 +16,10 @@ all_df = pd.read_csv("dashboard/all_data.csv")
 all_df.sort_values(by="order_approved_at", inplace=True)
 all_df.reset_index(inplace=True)
 
+# Add new code
+for col in datetime_cols:
+    all_df[col] = pd.to_datetime(all_df[col])
+
 # Geolocation Dataset
 geolocation = pd.read_csv('data/geolocation.csv')
 data = geolocation.drop_duplicates(subset='customer_unique_id')
@@ -41,16 +45,45 @@ city, most_common_city = function.create_byCity_df()
 order_status, common_status = function.create_order_status()
 rfm_df = function.compute_rfm()
 
+# Add new code
+total_monthly_order = monthly_orders_df["order_count"].sum()
+
 st.header("E-Commerce Dashboard :convenience_store:")
 
 # Monthly Orders
+# st.subheader("Monthly Orders")
+
+# col1, col2 = st.columns(2)
+
+# with col1:
+#     total_monthly_order = monthly_orders_df["order_count"].sum()
+#     st.markdown(f"Total Monthly Orders: **{total_monthly_order}**")
+
+# fig, ax = plt.subplots(figsize=(12, 6))
+# ax.plot(
+#     monthly_orders_df["month_year"], 
+#     monthly_orders_df["order_count"], 
+#     marker='o', 
+#     linewidth=2, 
+#     color="#068DA9"
+# )
+
+# for i, txt in enumerate(monthly_orders_df["order_count"]):
+#     ax.annotate(txt, (monthly_orders_df["month_year"][i], monthly_orders_df["order_count"][i]), 
+#                 textcoords="offset points", xytext=(0,5), ha='center', fontsize=10)
+
+# ax.set_title("Jumlah Pemesanan per Bulan", fontsize=16)
+# ax.set_xlabel("Bulan", fontsize=12)
+# ax.set_ylabel("Jumlah Pemesanan", fontsize=12)
+# ax.tick_params(axis="x", rotation=45, labelsize=10)
+# ax.tick_params(axis="y", labelsize=10)
+# ax.grid(axis='y', linestyle='--', alpha=0.7)
+
+# st.pyplot(fig)
+
+# Add new code
 st.subheader("Monthly Orders")
-
-col1, col2 = st.columns(2)
-
-with col1:
-    total_monthly_order = monthly_orders_df["order_count"].sum()
-    st.markdown(f"Total Monthly Orders: **{total_monthly_order}**")
+st.markdown(f"Total Monthly Orders: **{total_monthly_order}**")
 
 fig, ax = plt.subplots(figsize=(12, 6))
 ax.plot(
@@ -60,18 +93,10 @@ ax.plot(
     linewidth=2, 
     color="#068DA9"
 )
-
-for i, txt in enumerate(monthly_orders_df["order_count"]):
-    ax.annotate(txt, (monthly_orders_df["month_year"][i], monthly_orders_df["order_count"][i]), 
-                textcoords="offset points", xytext=(0,5), ha='center', fontsize=10)
-
 ax.set_title("Jumlah Pemesanan per Bulan", fontsize=16)
 ax.set_xlabel("Bulan", fontsize=12)
 ax.set_ylabel("Jumlah Pemesanan", fontsize=12)
-ax.tick_params(axis="x", rotation=45, labelsize=10)
-ax.tick_params(axis="y", labelsize=10)
-ax.grid(axis='y', linestyle='--', alpha=0.7)
-
+ax.tick_params(axis="x", rotation=45)
 st.pyplot(fig)
 
 
@@ -181,8 +206,34 @@ plt.grid(axis='y', linestyle='--', alpha=0.7)
 st.pyplot(fig)
 
 # RFM Analysis
-st.subheader("Customer Segmentation (RFM Analysis)")
+# st.subheader("Customer Segmentation (RFM Analysis)")
 
+# fig, ax = plt.subplots(figsize=(10, 6))
+# order = ['Best Customer', 'Loyal Customer', 'Potential Loyalist', 'At Risk', 'Lost Customer']
+# colors = ["#2ECC71", "#1ABC9C", "#F1C40F", "#E67E22", "#E74C3C"]
+
+# sns.barplot(
+#     x=rfm_df['Customer_Segment'].value_counts()[order].index,
+#     y=rfm_df['Customer_Segment'].value_counts()[order].values,
+#     palette=colors,
+#     ax=ax
+# )
+
+# ax.set_title("Distribusi Segmen Pelanggan Berdasarkan RFM Analysis", fontsize=14, fontweight='bold')
+# ax.set_xlabel("Customer Segment", fontsize=12)
+# ax.set_ylabel("Number of Customers", fontsize=12)
+# ax.set_xticklabels(ax.get_xticklabels(), rotation=20, ha="right")
+
+# for p in ax.patches:
+#     ax.annotate(f'{p.get_height():,.0f}', 
+#                 (p.get_x() + p.get_width() / 2., p.get_height()), 
+#                 ha='center', va='bottom', fontsize=11, fontweight='bold', color='black')
+
+# st.pyplot(fig)
+
+# Add new code
+# RFM Analysis
+st.subheader("Customer Segmentation (RFM Analysis)")
 fig, ax = plt.subplots(figsize=(10, 6))
 order = ['Best Customer', 'Loyal Customer', 'Potential Loyalist', 'At Risk', 'Lost Customer']
 colors = ["#2ECC71", "#1ABC9C", "#F1C40F", "#E67E22", "#E74C3C"]
@@ -193,17 +244,7 @@ sns.barplot(
     palette=colors,
     ax=ax
 )
-
-ax.set_title("Distribusi Segmen Pelanggan Berdasarkan RFM Analysis", fontsize=14, fontweight='bold')
-ax.set_xlabel("Customer Segment", fontsize=12)
-ax.set_ylabel("Number of Customers", fontsize=12)
-ax.set_xticklabels(ax.get_xticklabels(), rotation=20, ha="right")
-
-for p in ax.patches:
-    ax.annotate(f'{p.get_height():,.0f}', 
-                (p.get_x() + p.get_width() / 2., p.get_height()), 
-                ha='center', va='bottom', fontsize=11, fontweight='bold', color='black')
-
+ax.set_title("Distribusi Segmen Pelanggan Berdasarkan RFM Analysis", fontsize=14)
 st.pyplot(fig)
 
 
